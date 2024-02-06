@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "start": "nodemon server.ts"
+=======
+    "test": "echo \"Error: no test specified\" && exit 1"
+>>>>>>> f6eaff0f9065a95740fa15ebcd96ad3e473d01a4
   },
   "keywords": [],
   "author": "",
@@ -14,7 +18,10 @@
     "@types/node": "^20.11.16",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+<<<<<<< HEAD
     "nodemon": "^3.0.3",
+=======
+>>>>>>> f6eaff0f9065a95740fa15ebcd96ad3e473d01a4
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
