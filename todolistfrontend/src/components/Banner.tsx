@@ -1,5 +1,7 @@
 import React from "react";
 import { CiGrid2H } from "react-icons/ci";
+import { Link } from "react-router-dom";
+
 
 const Banner: React.FC = () => {
   return (
@@ -14,7 +16,13 @@ const Banner: React.FC = () => {
           <div>Projects</div>
         </div>
       </div>
-      div
+      <div className="flex items-center gap-2 ">
+          <CiGrid2H />
+          <Link to="/addtask">
+  <button>Ajouter une Tâche</button>
+</Link>
+
+        </div>
     </div>
   );
 };
