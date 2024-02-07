@@ -40,12 +40,12 @@ let tasks: Task[] = [
     description: "Description de la tache 4",
     completed: false,
   },
-  {
-    id: 5,
-    title: "task5",
-    description: "Description de la tache 5",
-    completed: false,
-  },
+  // {
+  //   id: 5,
+  //   title: "task5",
+  //   description: "Description de la tache 5",
+  //   completed: false,
+  // },
 ];
 
 app.get("/tasks", function (req: any, res: { json: (arg0: Task[]) => void; }) {

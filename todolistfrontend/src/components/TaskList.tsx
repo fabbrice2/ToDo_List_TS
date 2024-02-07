@@ -1,35 +1,55 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import AllTasks from "./AllTasks";
+import InProgressTasks from "./InProgressTasks";
+import DoneTasks from "./DoneTasks";
+import TasksDeleted from "./TasksDeleted";
+import { FaCirclePlus } from "react-icons/fa6";
 
-interface Task {
-  id: number;
-  title: string;
-  description: string;
-  completed: boolean;
-}
-
-const TaskList: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
-
-  useEffect(() => {
-    fetch("http://localhost:3001/tasks")
-      .then((response) => response.json())
-      .then((data: Task[]) => setTasks(data))
-      .catch((error) => console.error("Error fetching tasks:", error));
-  }, []);
+const TaskGrid: React.FC = () => {
   return (
-    <div className="text-white">
-      <h1>Task List</h1>
-      <ul>
-        {tasks.map((task) => (
-          <li key={task.id}>
-            <strong>{task.title}</strong>
-            <p>{task.description}</p>
-            <p>Completed: {task.completed ? "Yes" : "No"}</p>
-          </li>
-        ))}
-      </ul>
+    <div className="grid grid-cols-4 gap-4">
+      <div className="border rounded-md flex flex-col p-5 bg-[#24262C]">
+        <div className="flex items-center justify-between">
+          <div>All tasks(11)</div>
+          <div className="flex gap-2 items-center cursor-pointer">
+            <FaCirclePlus />
+            <div>Add New task</div>
+          </div>
+        </div>
+        <AllTasks />
+      </div>
+      <div className="border rounded-md flex flex-col p-5 bg-[#24262C]">
+        <div className="flex items-center justify-between">
+          <div>All tasks(11)</div>
+          <div className="flex gap-2 items-center cursor-pointer">
+            <FaCirclePlus />
+            <div>Add New task</div>
+          </div>
+        </div>
+        <InProgressTasks />
+      </div>
+      <div className="border rounded-md flex flex-col p-5 bg-[#24262C]">
+        <div className="flex items-center justify-between">
+          <div>All tasks(11)</div>
+          <div className="flex gap-2 items-center cursor-pointer">
+            <FaCirclePlus />
+            <div>Add New task</div>
+          </div>
+        </div>
+        <DoneTasks />
+      </div>
+      <div className="border rounded-md flex flex-col p-5 bg-[#24262C]">
+        <div className="flex items-center justify-between">
+          <div>All tasks(11)</div>
+          <div className="flex gap-2 items-center cursor-pointer">
+            <FaCirclePlus />
+            <div>Add New task</div>
+          </div>
+        </div>
+        <TasksDeleted />
+      </div>
     </div>
   );
 };
 
-export default TaskList;
+export default TaskGrid;
