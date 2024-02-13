@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // List.tsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,10 +10,16 @@ interface ListProps {
     subTasks: string[];
   };
 }
+=======
+import React, { useState, ChangeEvent } from "react";
+
+interface ListProps {}
+>>>>>>> 08f06be876ae3e5d27d3e4725cd6fb3ccd6659f9
 
 function List(props: ListProps) {
   const [task, setTask] = useState<string>("");
   const [click, setClick] = useState<boolean>(false);
+<<<<<<< HEAD
   const [tasklist, setTasklist] = useState<
     { id: number; title: string; subTasks: string[] }[]
   >([]);
@@ -165,6 +172,82 @@ function List(props: ListProps) {
                     onClick={() => RemoveTask(task.id)}
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                   >
+=======
+  const [tasklist, setTasklist] = useState<string[]>([]);
+  const [selectedtask, setSelectedtask] = useState<string[]>([]);
+  const [count, setCount] = useState<number>(0);
+  const [lowTask, setLowTask] = useState<string>("");
+  const [newFields, setnewFields] = useState<React.ReactNode[]>([]);
+
+
+  function handleClick(): void {
+    setTasklist([...tasklist, task]);
+    setTask("");
+    setClick(true);
+  }
+
+  function SelectedTask(item: string): void {
+    setSelectedtask(
+      selectedtask.includes(item)
+        ? selectedtask.filter((selectedtask) => selectedtask !== item)
+        : [...selectedtask, item]
+    );
+  }
+
+  function RemoveTask(item: string): void {
+    setTasklist(tasklist.filter((task) => task !== item));
+  }
+
+
+
+  function Count(): void {
+    setCount(count + 1);
+  }
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>): void {
+    setTask(e.target.value);
+  }
+
+
+  function addField() :void  {
+    const newField = (
+      <input
+        placeholder="Entrez une tâche"
+        value={task}
+        onChange={handleChange}
+      />
+    );
+  
+    setnewFields([...newFields, newField]);
+  }
+
+
+
+  return (
+    <div>
+      <div>
+    <input
+          placeholder="Entrez une tâche"
+          value={task}
+          onChange={handleChange}
+        />
+        <button onClick={handleClick}>Ajouter</button>
+        <button>+</button>
+        {click && (
+          <ul>
+            {tasklist.map((item, index) => (
+              <li key={index}>
+                <div
+                  onClick={() => SelectedTask(item)}
+                  className={`${
+                    selectedtask.includes(item) ? "line-through" : ""
+                  }`}
+                >
+                  <h1>{item}</h1>
+                  <h2>Complétion de la tâche</h2>
+                  <h3>{count} / 10</h3>
+                  <button onClick={() => RemoveTask(item)}>
+>>>>>>> 08f06be876ae3e5d27d3e4725cd6fb3ccd6659f9
                     Supprimer la tâche
                   </button>
                 </div>

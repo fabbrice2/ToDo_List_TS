@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
+<<<<<<< HEAD
 import { LiaEdit } from "react-icons/lia";
 import { MdDelete } from "react-icons/md";
 import TaskStep from "./TaskStep";
 import { Link } from "react-router-dom";
+=======
+>>>>>>> 08f06be876ae3e5d27d3e4725cd6fb3ccd6659f9
 
 interface Tasks {
   id: number;
   title: string;
   description: string;
   completed: boolean;
+<<<<<<< HEAD
   subTasks?: string[]; // Ajoutez cette ligne pour définir subTasks comme optionnel
+=======
+>>>>>>> 08f06be876ae3e5d27d3e4725cd6fb3ccd6659f9
 }
 
 const InProgressTasks: React.FC = () => {
@@ -21,6 +27,7 @@ const InProgressTasks: React.FC = () => {
       .then((data: Tasks[]) => setTasks(data))
       .catch((error) => console.error("Error fetching tasks:", error));
   }, []);
+<<<<<<< HEAD
 
   const handleDelete = (taskId: number) => {
     fetch(`http://localhost:3001/tasks/${taskId}`, {
@@ -77,6 +84,19 @@ const InProgressTasks: React.FC = () => {
           </li>
         </ul>
       ))}
+=======
+  return (
+    <div className="text-white">
+       <ul className="border rounded-md">
+        {tasks.map((task) => (
+          <li key={task.id} className="border rounded-md">
+            <strong>{task.title}</strong>
+            <p>{task.description}</p>
+            <p>Completed: {task.completed ? "Yes" : "No"}</p>
+          </li>
+        ))}
+      </ul>
+>>>>>>> 08f06be876ae3e5d27d3e4725cd6fb3ccd6659f9
     </div>
   );
 };

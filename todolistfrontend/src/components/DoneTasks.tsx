@@ -1,10 +1,17 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 
 interface CompletedTasks {
+=======
+import React, { useState, useEffect } from "react";
+
+interface Tasks {
+>>>>>>> 08f06be876ae3e5d27d3e4725cd6fb3ccd6659f9
   id: number;
   title: string;
   description: string;
   completed: boolean;
+<<<<<<< HEAD
   deletedDate?: string;
 }
 
@@ -43,5 +50,32 @@ function DoneTasks() {
     </div>
   );
 }
+=======
+}
+
+const DoneTasks: React.FC = () => {
+  const [tasks, setTasks] = useState<Tasks[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/tasks")
+      .then((response) => response.json())
+      .then((data: Tasks[]) => setTasks(data))
+      .catch((error) => console.error("Error fetching tasks:", error));
+  }, []);
+  return (
+    <div className="text-white">
+       <ul className="border rounded-md">
+        {tasks.map((task) => (
+          <li key={task.id} className="border rounded-md">
+            <strong>{task.title}</strong>
+            <p>{task.description}</p>
+            <p>Completed: {task.completed ? "Yes" : "No"}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+>>>>>>> 08f06be876ae3e5d27d3e4725cd6fb3ccd6659f9
 
 export default DoneTasks;
