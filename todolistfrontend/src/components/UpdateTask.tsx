@@ -125,7 +125,7 @@ const UpdateTask: React.FC = () => {
             >
               Modifier
             </button>
-            <Link to={"/"} className="bg-red-600 borde py-2 px-4 ">
+            <Link to={"/home"} className="bg-red-600 borde py-2 px-4 ">
               Cancel
             </Link>
 

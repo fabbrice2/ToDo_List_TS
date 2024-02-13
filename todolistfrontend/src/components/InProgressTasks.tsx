@@ -41,9 +41,12 @@ const InProgressTasks: React.FC = () => {
           key={task.id}
           className="flex flex-col bg-[#292B31] rounded-md p-3 gap-5"
         >
-          <li>
-            <strong>{task.title}</strong>
-            <p className="text-[#ffffff6e]">{task.description}</p>
+          <li >
+            <strong >{task.title}</strong>
+            <div className="max-h-[6rem]  h-auto">
+            <p className="text-[#ffffff6e] overflow-hidden hover:overflow-scroll w-50 h-16">{task.description}</p>
+            </div>
+          
           </li>
           <li className="flex flex-col gap-2">
             {task.subTasks && (

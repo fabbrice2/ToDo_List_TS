@@ -4,7 +4,7 @@ import { LiaEdit } from "react-icons/lia";
 import { MdDelete } from "react-icons/md";
 import TaskStep from "./TaskStep";
 import DoneTasks from "./DoneTasks"; // Importer DoneTasks
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 
 interface Tasks {
   id: number;
@@ -17,6 +17,9 @@ interface Tasks {
 const AllTasks: React.FC = () => {
   const [tasks, setTasks] = useState<Tasks[]>([]);
   const [doneTasks, setDoneTasks] = useState<Tasks[]>([]);
+
+ 
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:3001/tasks")
@@ -33,9 +36,18 @@ const AllTasks: React.FC = () => {
       .then((data) => {
         console.log(data.message);
         setTasks(tasks.filter((task) => task.id !== taskId));
+        
+        ////////////////// 
+        window.location.reload(); 
+        navigate('/');
+    /////////////////////
+
+
       })
       .catch((error) => console.error("Error deleting task:", error));
   };
+
+
 
   return (
     <div className="rounded-md flex flex-col gap-4">
@@ -44,9 +56,12 @@ const AllTasks: React.FC = () => {
           key={task.id}
           className="flex flex-col bg-[#292B31] rounded-md p-3 gap-5"
         >
-          <li>
-            <strong>{task.title}</strong>
-            <p className="text-[#ffffff6e]">{task.description}</p>
+          <li >
+            <strong >{task.title}</strong>
+            <div>
+            <p className="text-[#ffffff6e] overflow-hidden hover:overflow-scroll w-50 h-16">{task.description}</p>
+            </div>
+          
           </li>
           <li className="flex flex-col gap-2">
             <TaskStep

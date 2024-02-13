@@ -1,6 +1,8 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+import express, { Request, Response } from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
+const mysql = require('mysql');
+
 
 const app = express();
 const port = 3001;
@@ -8,55 +10,115 @@ const port = 3001;
 app.use(express.json());
 app.use(cors());
 
+const db = mysql.createConnection({
+  host: "localhost",
+  user: 'root',
+  password: "",
+  database: "signup"
+});
 
-interface Task{
-  id: number,
-  title: string,
-  description: string,
-  completed: boolean,
+app.post('/signup', (req: { body: { name: any; email: any; password: any; }; }, res: { json: (arg0: string) => any; }) => {
+  const sql = "INSERT INTO login (`name`, `email` ,`password`) VALUES (?)";
+  const values = [
+      req.body.name,
+      req.body.email,
+      req.body.password
+  ];
+  db.query(sql, [values], (err: any, data: any) => {
+      if (err) {
+          return res.json("Error");
+      }
+      return res.json(data);
+  });
+});
+
+app.post('/login', (req: { body: { email: any; password: any; }; }, res: { json: (arg0: string) => any; }) => {
+  const sql = "SELECT * FROM login WHERE `email` = ? AND `password` = ?";
+  db.query(sql, [req.body.email, req.body.password], (err: any, data: string | any[]) => {
+      if (err) {
+          return res.json("Error");
+      }
+      if (data.length > 0) {
+          return res.json("Success");
+      } else {
+          return res.json("Failed");
+      }
+  });
+});
+
+
+
+interface Task {
+  id: number;
+  title: string;
+  description: string;
+  completed: boolean;
+  subTasks: string[];
+  deletedDate?: string;
 }
 
 let tasks: Task[] = [
   {
     id: 1,
-    title: "task1",
-    description: "Description de la tache 1",
+    title: "Task 1",
+    description: "Description of Task 1",
     completed: false,
+    subTasks: ["Subtask 1.1", "Subtask 1.2"],
+  },
+  {
+    id: 1,
+    title: "Task 1",
+    description: "Description of Task 1",
+    completed: false,
+    subTasks: ["Subtask 1.1", "Subtask 1.2"],
   },
   {
     id: 2,
-    title: "task2",
-    description: "Description de la tache 2",
+    title: "Task 2",
+    description: "Description of Task 2",
     completed: false,
+    subTasks: ["Subtask 2.1", "Subtask 2.2", "Subtask 2.3"],
   },
   {
     id: 3,
-    title: "task3",
-    description: "Description de la tache 3",
+    title: "Task 3",
+    description: "Description of Task 3",
     completed: false,
+    subTasks: ["Subtask 3.1"],
   },
   {
     id: 4,
-    title: "task4",
-    description: "Description de la tache 4",
+    title: "Task 4",
+    description: "Description of Task 4",
     completed: false,
+    subTasks: [],
   },
-  // {
-  //   id: 5,
-  //   title: "task5",
-  //   description: "Description de la tache 5",
-  //   completed: false,
-  // },
+  {
+    id: 5,
+    title: "Task 5",
+    description: "Description of Task 5",
+    completed: false,
+    subTasks: ["Subtask 5.1", "Subtask 5.2", "Subtask 5.3", "Subtask 5.4"],
+  },
 ];
 
-app.get("/tasks", function (req: any, res: { json: (arg0: Task[]) => void; }) {
-  res.json(tasks);
+let deletedTasks: Task[] = [];
+let CompletedTasks: Task[] = [];
+
+// Récupération de toutes les tâches
+app.get("/tasks", (req: Request, res: Response) => {
+  // Ajout de la propriété subTasksCount dans chaque tâche
+  const tasksWithSubTasksCount = tasks.map((task) => ({
+    ...task,
+    subTasksCount: task.subTasks ? task.subTasks.length : 0,
+  }));
+  res.json(tasksWithSubTasksCount);
 });
 
-app.get("/tasks/:id", function (req: { params: { id: string; }; }, res: { json: (arg0: Task) => void; status: (arg0: number) => { (): any; new(): any; json: { (arg0: { message: string; }): void; new(): any; }; }; }) {
+// Récupération d'une tâche par son ID
+app.get("/tasks/:id", (req: Request, res: Response) => {
   const taskId = parseInt(req.params.id, 10);
   const task = tasks.find((task) => task.id === taskId);
-
   if (task) {
     res.json(task);
   } else {
@@ -64,14 +126,22 @@ app.get("/tasks/:id", function (req: { params: { id: string; }; }, res: { json: 
   }
 });
 
-app.post("/tasks", function (req: { body: any; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: any): void; new(): any; }; }; }) {
-  const newTask = req.body;
-  newTask.id = tasks.length + 1;
+// Ajout d'une nouvelle tâche
+app.post("/tasks", (req: Request, res: Response) => {
+  // Assurez-vous que les données envoyées depuis l'application correspondent à la structure attendue
+  const newTask: Task = {
+    id: tasks.length + 1,
+    title: req.body.title,
+    description: req.body.description,
+    completed: req.body.completed || false,
+    subTasks: req.body.subTasks || [],
+  };
   tasks.push(newTask);
   res.status(201).json(newTask);
 });
 
-app.put("/tasks/:id", function (req: { params: { id: string; }; body: any; }, res: { json: (arg0: { message: string; }) => void; }) {
+// Mise à jour d'une tâche par son ID
+app.put("/tasks/:id", (req: Request, res: Response) => {
   const taskId = parseInt(req.params.id, 10);
   const updatedTask = req.body;
   tasks = tasks.map((task) =>
@@ -80,12 +150,53 @@ app.put("/tasks/:id", function (req: { params: { id: string; }; body: any; }, re
   res.json({ message: "Tâche mise à jour avec succès" });
 });
 
-app.delete("/tasks/:id", function (req: { params: { id: string; }; }, res: { json: (arg0: { message: string; }) => void; }) {
+// Suppression d'une tâche par son ID
+app.delete("/tasks/:id", (req: Request, res: Response) => {
   const taskId = parseInt(req.params.id, 10);
+  const deletedTask = tasks.find((task) => task.id === taskId);
+  if (deletedTask) {
+    deletedTask.deletedDate = new Date().toLocaleDateString();
+    deletedTasks.push(deletedTask);
+  }
   tasks = tasks.filter((task) => task.id !== taskId);
-  res.json({ message: "Tâche supprimée avec succès" });
+  res.json({
+    message: "Tâche supprimée avec succès",
+    deletedDate: deletedTask ? deletedTask.deletedDate : undefined,
+  });
 });
 
-app.listen(port, function () {
+// Récupération des tâches supprimées
+app.get("/deletedTasks", (req: Request, res: Response) => {
+  res.json(deletedTasks);
+});
+
+// Récupération de toutes les tâches complétées
+app.get("/completedTasks", (req: Request, res: Response) => {
+  res.json(CompletedTasks);
+});
+
+// Ajout d'une tâche complétée
+app.post("/completedTasks", (req: Request, res: Response) => {
+  // Assurez-vous que les données envoyées depuis l'application correspondent à la structure attendue
+  const newCompletedTask: Task = {
+    ...req.body,
+    completed: true,
+  };
+  CompletedTasks.push(newCompletedTask);
+  res.status(201).json(newCompletedTask);
+});
+
+// Démarrage du serveur
+app.listen(port, () => {
   console.log(`Le serveur écoute sur le port ${port}`);
 });
+
+
+
+
+
+
+
+
+
+

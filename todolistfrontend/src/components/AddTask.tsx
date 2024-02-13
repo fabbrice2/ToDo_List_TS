@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // List.tsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,21 +6,16 @@ import TaskStep from "./TaskStep";
 interface ListProps {
   task?: {
     title: string;
+    description:string ;
     subTasks: string[];
   };
 }
-=======
-import React, { useState, ChangeEvent } from "react";
-
-interface ListProps {}
->>>>>>> 08f06be876ae3e5d27d3e4725cd6fb3ccd6659f9
 
 function List(props: ListProps) {
   const [task, setTask] = useState<string>("");
   const [click, setClick] = useState<boolean>(false);
-<<<<<<< HEAD
   const [tasklist, setTasklist] = useState<
-    { id: number; title: string; subTasks: string[] }[]
+    { id: number; title: string; description:string ; subTasks: string[] }[]
   >([]);
   const [count, setCount] = useState<number>(0);
   const [newFields, setNewFields] = useState<{ id: number; value: string }[]>(
@@ -98,10 +92,14 @@ function List(props: ListProps) {
     setNewFields([...newFields, newField]);
   }
 
+  function Cancel():void {
+    navigate('/home');
+  }
+
   return (
-    <div className="container h-screen bg-[#2A2B2F] grid items-center">
-      <div className="max-w-2xl mx-auto p-6 border-2 rounded-md flex flex-col gap-4 flex-1">
-        <div className="flex gap-5">
+    <div className="h-screen bg-[#2A2B2F] grid items-center">
+      <div className="overflow-y-auto max-h-80 max-w-2xl mx-auto p-6 border-2 rounded-md flex flex-col gap-4 flex-1  ">
+        <div className="flex gap-5 ">
           <label className="text-white block text-sm font-medium w-28">
             Titre
           </label>
@@ -154,7 +152,7 @@ function List(props: ListProps) {
             >
               Ajouter
             </button>
-            <button className="bg-transparent border py-2 px-4 flex-1">
+            <button onClick={Cancel} className="bg-transparent border py-2 px-4 flex-1">
               Annuler
             </button>
           </div>
@@ -167,87 +165,12 @@ function List(props: ListProps) {
                   <h1 className="text-xl font-bold mb-2 text-white">
                     {task.title}
                   </h1>
+                  
                   <TaskStep subTasks={task.subTasks} taskId={task.id} title={""} />
                   <button
                     onClick={() => RemoveTask(task.id)}
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                   >
-=======
-  const [tasklist, setTasklist] = useState<string[]>([]);
-  const [selectedtask, setSelectedtask] = useState<string[]>([]);
-  const [count, setCount] = useState<number>(0);
-  const [lowTask, setLowTask] = useState<string>("");
-  const [newFields, setnewFields] = useState<React.ReactNode[]>([]);
-
-
-  function handleClick(): void {
-    setTasklist([...tasklist, task]);
-    setTask("");
-    setClick(true);
-  }
-
-  function SelectedTask(item: string): void {
-    setSelectedtask(
-      selectedtask.includes(item)
-        ? selectedtask.filter((selectedtask) => selectedtask !== item)
-        : [...selectedtask, item]
-    );
-  }
-
-  function RemoveTask(item: string): void {
-    setTasklist(tasklist.filter((task) => task !== item));
-  }
-
-
-
-  function Count(): void {
-    setCount(count + 1);
-  }
-
-  function handleChange(e: ChangeEvent<HTMLInputElement>): void {
-    setTask(e.target.value);
-  }
-
-
-  function addField() :void  {
-    const newField = (
-      <input
-        placeholder="Entrez une tâche"
-        value={task}
-        onChange={handleChange}
-      />
-    );
-  
-    setnewFields([...newFields, newField]);
-  }
-
-
-
-  return (
-    <div>
-      <div>
-    <input
-          placeholder="Entrez une tâche"
-          value={task}
-          onChange={handleChange}
-        />
-        <button onClick={handleClick}>Ajouter</button>
-        <button>+</button>
-        {click && (
-          <ul>
-            {tasklist.map((item, index) => (
-              <li key={index}>
-                <div
-                  onClick={() => SelectedTask(item)}
-                  className={`${
-                    selectedtask.includes(item) ? "line-through" : ""
-                  }`}
-                >
-                  <h1>{item}</h1>
-                  <h2>Complétion de la tâche</h2>
-                  <h3>{count} / 10</h3>
-                  <button onClick={() => RemoveTask(item)}>
->>>>>>> 08f06be876ae3e5d27d3e4725cd6fb3ccd6659f9
                     Supprimer la tâche
                   </button>
                 </div>
