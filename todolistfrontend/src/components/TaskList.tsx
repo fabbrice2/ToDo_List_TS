@@ -34,7 +34,9 @@ const TaskList: React.FC = () => {
             </Link>
           </div>
         </div>
-        <AllTasks />
+        {/* <AllTasks />
+         */}
+         <AllTasks />
       </div>
       <div className="rounded-lg flex flex-col gap-3 p-5 bg-[#24262C]">
         <div className="flex items-center justify-between">
