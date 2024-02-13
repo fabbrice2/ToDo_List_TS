@@ -1,8 +1,7 @@
 import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-const mysql = require('mysql');
-
+const mysql = require("mysql");
 
 const app = express();
 const port = 3001;
@@ -12,41 +11,51 @@ app.use(cors());
 
 const db = mysql.createConnection({
   host: "localhost",
-  user: 'root',
+  user: "root",
   password: "",
-  database: "signup"
+  database: "signup",
 });
 
-app.post('/signup', (req: { body: { name: any; email: any; password: any; }; }, res: { json: (arg0: string) => any; }) => {
-  const sql = "INSERT INTO login (`name`, `email` ,`password`) VALUES (?)";
-  const values = [
-      req.body.name,
-      req.body.email,
-      req.body.password
-  ];
-  db.query(sql, [values], (err: any, data: any) => {
+app.post(
+  "/signup",
+  (
+    req: { body: { name: any; email: any; password: any } },
+    res: { json: (arg0: string) => any }
+  ) => {
+    const sql = "INSERT INTO login (`name`, `email` ,`password`) VALUES (?)";
+    const values = [req.body.name, req.body.email, req.body.password];
+    db.query(sql, [values], (err: any, data: any) => {
       if (err) {
-          return res.json("Error");
+        return res.json("Error");
       }
       return res.json(data);
-  });
-});
+    });
+  }
+);
 
-app.post('/login', (req: { body: { email: any; password: any; }; }, res: { json: (arg0: string) => any; }) => {
-  const sql = "SELECT * FROM login WHERE `email` = ? AND `password` = ?";
-  db.query(sql, [req.body.email, req.body.password], (err: any, data: string | any[]) => {
-      if (err) {
+app.post(
+  "/login",
+  (
+    req: { body: { email: any; password: any } },
+    res: { json: (arg0: string) => any }
+  ) => {
+    const sql = "SELECT * FROM login WHERE `email` = ? AND `password` = ?";
+    db.query(
+      sql,
+      [req.body.email, req.body.password],
+      (err: any, data: string | any[]) => {
+        if (err) {
           return res.json("Error");
-      }
-      if (data.length > 0) {
+        }
+        if (data.length > 0) {
           return res.json("Success");
-      } else {
+        } else {
           return res.json("Failed");
+        }
       }
-  });
-});
-
-
+    );
+  }
+);
 
 interface Task {
   id: number;
@@ -107,7 +116,6 @@ let CompletedTasks: Task[] = [];
 
 // Récupération de toutes les tâches
 app.get("/tasks", (req: Request, res: Response) => {
-  // Ajout de la propriété subTasksCount dans chaque tâche
   const tasksWithSubTasksCount = tasks.map((task) => ({
     ...task,
     subTasksCount: task.subTasks ? task.subTasks.length : 0,
@@ -128,7 +136,6 @@ app.get("/tasks/:id", (req: Request, res: Response) => {
 
 // Ajout d'une nouvelle tâche
 app.post("/tasks", (req: Request, res: Response) => {
-  // Assurez-vous que les données envoyées depuis l'application correspondent à la structure attendue
   const newTask: Task = {
     id: tasks.length + 1,
     title: req.body.title,
@@ -177,7 +184,6 @@ app.get("/completedTasks", (req: Request, res: Response) => {
 
 // Ajout d'une tâche complétée
 app.post("/completedTasks", (req: Request, res: Response) => {
-  // Assurez-vous que les données envoyées depuis l'application correspondent à la structure attendue
   const newCompletedTask: Task = {
     ...req.body,
     completed: true,
@@ -190,13 +196,3 @@ app.post("/completedTasks", (req: Request, res: Response) => {
 app.listen(port, () => {
   console.log(`Le serveur écoute sur le port ${port}`);
 });
-
-
-
-
-
-
-
-
-
-

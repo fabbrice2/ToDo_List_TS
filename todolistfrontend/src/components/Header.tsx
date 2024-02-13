@@ -31,37 +31,23 @@ const Header: React.FC = () => {
     return `${day} ${monthName} ${year}`;
   })();
 
-
   const navigate = useNavigate();
   const handleDeconnexion = () => {
-    // Code pour déconnecter l'utilisateur (par exemple : supprimer le token JWT, vider le state, etc.)
-    
-    // Redirection vers la page de connexion
-    navigate('/');
+    navigate("/");
   };
 
-  
-
-
-
   return (
-
-<div className="flex justify-between items-center text-white py-3 px-5 border">
-  <div>Welcome back, Vincent 👋</div>
-  <div className="flex justify-center items-center gap-2">
-    <div>{currentDate}</div>
-    <CiLogout className="text-2xl cursor-pointer" onClick={handleDeconnexion}/>
-  </div>
- 
-</div>
-
-
+    <div className="flex justify-between items-center text-white py-3 px-5 border-b-2 border-[#ffffff10]">
+      <div>Welcome back 👋</div>
+      <div className="flex justify-center items-center gap-2">
+        <div>{currentDate}</div>
+        <CiLogout
+          className="text-2xl cursor-pointer"
+          onClick={handleDeconnexion}
+        />
+      </div>
+    </div>
   );
 };
 
 export default Header;
-
-
-
-
-

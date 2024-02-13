@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 interface CompletedTasks {
   id: number;
@@ -15,7 +15,9 @@ function DoneTasks() {
     fetch("http://localhost:3001/completedTasks")
       .then((response) => response.json())
       .then((data: CompletedTasks[]) => setCompletedTasks(data))
-      .catch((error) => console.error("Error fetching completed tasks:", error));
+      .catch((error) =>
+        console.error("Error fetching completed tasks:", error)
+      );
   }, []);
 
   return (
@@ -35,7 +37,7 @@ function DoneTasks() {
           </li>
           <li className="flex justify-between">
             <div className="flex items-center gap-1 text-l text-green-600">
-            Complété 
+              Complété
             </div>
           </li>
         </ul>

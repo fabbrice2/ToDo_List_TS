@@ -18,10 +18,7 @@ const UpdateTask: React.FC = () => {
     subTasks: [],
   });
 
-  /////////////////////////////////
   const [modificationEffectuee, setModificationEffectuee] = useState(false);
-
-  /////////////////////////
 
   useEffect(() => {
     fetch(`http://localhost:3001/tasks/${id}`)
@@ -48,17 +45,6 @@ const UpdateTask: React.FC = () => {
   };
 
   const navigate = useNavigate();
-  // const [modificationEffectuee1, setModificationEffectuee1] = useState(false);
-
-  // const handleModification = () => {
-  //   setModificationEffectuee1(true);
-
-  //   // Redirection après 2 secondes
-  //   setTimeout(() => {
-  //     navigate("/");
-  //   }, 6000);
-  // };
-
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (modificationEffectuee) {

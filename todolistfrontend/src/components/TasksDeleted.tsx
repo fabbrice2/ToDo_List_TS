@@ -7,10 +7,8 @@ interface DeletedTask {
   title: string;
   description: string;
   completed: boolean;
-  deletedDate: string; 
+  deletedDate: string;
 }
-
-
 
 const TasksDeleted: React.FC = () => {
   const [deletedTasks, setDeletedTasks] = useState<DeletedTask[]>([]);
@@ -29,17 +27,15 @@ const TasksDeleted: React.FC = () => {
           key={task.id}
           className="flex flex-col bg-[#292B31] rounded-md p-3 gap-5"
         >
-        <li >
-            <strong >{task.title}</strong>
-            <div className="max-h-[2rem]  h-auto">
-            <p className="text-[#ffffff6e] overflow-hidden hover:overflow-scroll w-50 h-16">{task.description}</p>
+          <li>
+            <strong>{task.title}</strong>
+            <div className="">
+              <p className="text-[#ffffff6e]">{task.description}</p>
             </div>
-          
           </li>
-          <li className="flex flex-col gap-2">
-          </li>
+          <li className="flex flex-col gap-2"></li>
           <li className="flex justify-between">
-            <div className="bg-[#ffffff06] rounded-full px-3 py-1 text-[#989CAA] w-28 grid place-items-center">
+            <div className="bg-[#ffffff06] rounded-full px-3 py-1 text-[#989CAA] grid place-items-center">
               {task.deletedDate}
             </div>
             <div className="flex items-center gap-1 text-l text-red-600">

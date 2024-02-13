@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { TfiMenuAlt } from "react-icons/tfi";
 
@@ -13,7 +12,7 @@ interface Tasks {
   title: string;
   description: string;
   completed: boolean;
-  subTasks?: string[]; 
+  subTasks?: string[];
 }
 
 const TaskStep: React.FC<TaskStepProps> = ({ subTasks, taskId, title }) => {
@@ -33,7 +32,7 @@ const TaskStep: React.FC<TaskStepProps> = ({ subTasks, taskId, title }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.message); 
+        console.log(data.message);
         setTasks(tasks.filter((task) => task.id !== taskId));
       })
       .catch((error) => console.error("Error deleting task:", error));
@@ -41,7 +40,7 @@ const TaskStep: React.FC<TaskStepProps> = ({ subTasks, taskId, title }) => {
 
   const updateAgreement = () => {
     setAgreement(count === subTasks.length);
-  
+
     setProgress((count / subTasks.length) * 100);
   };
 
@@ -89,9 +88,13 @@ const TaskStep: React.FC<TaskStepProps> = ({ subTasks, taskId, title }) => {
   }
 
   return (
-
-
     <div className="flex flex-col gap-2">
+      <div className="h-2 bg-gray-500 rounded-full">
+        <div
+          className={`h-2 ${progressBarColor} rounded-full`}
+          style={{ width: `${progress}%` }}
+        ></div>
+      </div>
       <div
         className="flex justify-between items-center cursor-pointer"
         onClick={toggleVisibility}
@@ -108,22 +111,12 @@ const TaskStep: React.FC<TaskStepProps> = ({ subTasks, taskId, title }) => {
         <div>
           {subTasks.map((subTask, index) => (
             <div key={index} className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                name="agreement"
-                onChange={handleChange}
-              />
+              <input type="checkbox" name="agreement" onChange={handleChange} />
               <p>{subTask}</p>
             </div>
           ))}
         </div>
       )}
-      <div className="h-2 relative max-w-xl rounded-full overflow-hidden">
-        <div
-          className={`h-2 ${progressBarColor}`}
-          style={{ width: `${progress}%` }}
-        ></div>
-      </div>
       <button
         disabled={!agreement}
         onClick={() => {
@@ -139,7 +132,6 @@ const TaskStep: React.FC<TaskStepProps> = ({ subTasks, taskId, title }) => {
         Continuer
       </button>
     </div>
-
   );
 };
 
