@@ -14,10 +14,10 @@ app.use(express.json());
 app.use(cors());
 
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "signup",
+  host: DB_HOST,
+  user: DB_USERNAME,
+  password: DB_PASSWORD,
+  database: DB_DBNAME,
 });
 
 app.post(
@@ -191,6 +191,6 @@ app.post("/completedTasks", (req: Request, res: Response) => {
 });
 
 // Démarrage du serveur
-app.listen(port, () => {
-  console.log(`Le serveur écoute sur le port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Le serveur écoute sur le port ${PORT}`);
 });
