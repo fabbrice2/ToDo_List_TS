@@ -27,7 +27,7 @@ const TaskStep: React.FC<TaskStepProps> = ({ subTasks, taskId, title }) => {
   };
 
   const handleDelete = (taskId: number) => {
-    fetch(`http://localhost:3001/tasks/${taskId}`, {
+    fetch(`https://todo-list-ts-z22t.onrender.com/tasks/${taskId}`, {
       method: "DELETE",
     })
       .then((response) => response.json())
@@ -55,7 +55,7 @@ const TaskStep: React.FC<TaskStepProps> = ({ subTasks, taskId, title }) => {
   };
 
   const handleContinue = () => {
-    fetch("http://localhost:3001/completedTasks", {
+    fetch("https://todo-list-ts-z22t.onrender.com/completedTasks", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

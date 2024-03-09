@@ -21,7 +21,7 @@ const UpdateTask: React.FC = () => {
   const [modificationEffectuee, setModificationEffectuee] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/tasks/${id}`)
+    fetch(`https://todo-list-ts-z22t.onrender.com/tasks/${id}`)
       .then((response) => response.json())
       .then((data: Task) => {
         setTask(data);
@@ -60,7 +60,7 @@ const UpdateTask: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    fetch(`http://localhost:3001/tasks/${id}`, {
+    fetch(`https://todo-list-ts-z22t.onrender.com/tasks/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

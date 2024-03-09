@@ -18,7 +18,7 @@ const AllTasks: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3001/tasks")
+    fetch("https://todo-list-ts-z22t.onrender.com/tasks")
       .then((response) => response.json())
       .then((data: Tasks[]) => {
         const sortedTasks = data.sort((a, b) => b.id - a.id);
@@ -28,7 +28,7 @@ const AllTasks: React.FC = () => {
   }, []);
 
   const handleDelete = (taskId: number) => {
-    fetch(`http://localhost:3001/tasks/${taskId}`, {
+    fetch(`https://todo-list-ts-z22t.onrender.com/tasks/${taskId}`, {
       method: "DELETE",
     })
       .then((response) => response.json())
