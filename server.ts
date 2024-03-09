@@ -4,7 +4,11 @@ import cors from "cors";
 const mysql = require("mysql");
 
 const app = express();
-const port = 3001;
+const PORT = process.env.PORT || 3001;
+const DB_HOST = process.env.DB_HOST || "localhost";
+const DB_USERNAME = process.env.DB_USERNAME || "root";
+const DB_PASSWORD = process.env.DB_PASSWORD || "";
+const DB_DBNAME = process.env.DB_DBNAME || "react_ecommerce";
 
 app.use(express.json());
 app.use(cors());
