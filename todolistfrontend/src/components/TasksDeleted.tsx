@@ -14,7 +14,7 @@ const TasksDeleted: React.FC = () => {
   const [deletedTasks, setDeletedTasks] = useState<DeletedTask[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/deletedTasks")
+    fetch("https://todo-list-ts-suj6.onrender.com/deletedTasks")
       .then((response) => response.json())
       .then((data: DeletedTask[]) => setDeletedTasks(data))
       .catch((error) => console.error("Error fetching deleted tasks:", error));
