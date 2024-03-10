@@ -48,7 +48,7 @@ function Signup() {
       !validationErrors.email &&
       !validationErrors.password
     ) {
-      fetch("http://localhost:3001/signup", {
+      fetch("https://todo-list-ts-suj6.onrender.com/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
