@@ -28,7 +28,7 @@ const AllTasks: React.FC = () => {
   }, []);
 
   const handleDelete = (taskId: number) => {
-    fetch(`http://localhost:3001/tasks/${taskId}`, {
+    fetch(`https://todo-list-ts-suj6.onrender.com/tasks/${taskId}`, {
       method: "DELETE",
     })
       .then((response) => response.json())
