@@ -9,10 +9,11 @@ interface CompletedTasks {
 }
 
 function DoneTasks() {
+  
   const [completedTasks, setCompletedTasks] = useState<CompletedTasks[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/completedTasks")
+    fetch("https://todo-list-ts-suj6.onrender.com/completedTasks")
       .then((response) => response.json())
       .then((data: CompletedTasks[]) => setCompletedTasks(data))
       .catch((error) =>
