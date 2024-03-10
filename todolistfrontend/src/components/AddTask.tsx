@@ -25,7 +25,7 @@ function List(props: ListProps) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3001/tasks")
+    fetch("https://todo-list-ts-suj6.onrender.com/tasks")
       .then((response) => response.json())
       .then((data) => setTasklist(data))
       .catch((error) =>
@@ -39,7 +39,7 @@ function List(props: ListProps) {
       subTasks: newFields.map((field) => field.value),
     };
 
-    fetch("http://localhost:3001/tasks", {
+    fetch("https://todo-list-ts-suj6.onrender.com/tasks", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -60,7 +60,7 @@ function List(props: ListProps) {
   }
 
   function RemoveTask(id: number): void {
-    fetch(`http://localhost:3001/tasks/${id}`, {
+    fetch(`https://todo-list-ts-suj6.onrender.com/tasks/${id}`, {
       method: "DELETE",
     })
       .then((response) => {
