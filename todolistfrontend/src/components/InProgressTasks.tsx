@@ -18,7 +18,7 @@ const InProgressTasks: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3001/tasks")
+    fetch("https://todo-list-ts-suj6.onrender.com/tasks")
       .then((response) => response.json())
       .then((data: Tasks[]) => {
         const sortedTasks = data.sort((a, b) => b.id - a.id);
@@ -28,12 +28,13 @@ const InProgressTasks: React.FC = () => {
   }, []);
 
   const handleDelete = (taskId: number) => {
-    fetch(`http://localhost:3001/tasks/${taskId}`, {
+    fetch(`https://todo-list-ts-suj6.onrender.com/tasks/${taskId}`, {
       method: "DELETE",
     })
       .then((response) => response.json())
       .then((data) => {
         console.log(data.message);
+        window.location.href = "/home";
         setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
       })
       .catch((error) => console.error("Error deleting task:", error));
